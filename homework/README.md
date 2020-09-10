@@ -4,8 +4,9 @@
 1. First item on my list
 2. Second item on my list
 3. Third item on my list
-  *Sub-item for fun
+  * Sub-item for fun
 4. Fourth item on my list
+
    Indented paragraph, for fun!
 
 
