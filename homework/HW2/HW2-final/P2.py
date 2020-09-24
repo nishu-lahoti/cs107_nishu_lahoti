@@ -4,6 +4,11 @@ def dna_complement(sequence):
     a = ""
     b = [x for x in sequence]
 
+
+    if len(sequence) == 0:
+        print("Sequence is empty.")
+        return None;
+
     for i in b:
         if (i.upper() == "A"):
             a += "T"
@@ -27,5 +32,13 @@ print(sequence_correct)
 sequence_wrong = "ATGCCTTX3GAAA"
 print(sequence_wrong)
 
+sequence_none = ""
+
 dna_complement(sequence_correct)
 dna_complement(sequence_wrong)
+dna_complement(sequence_none)
+
+
+# Victor's elegant dictionary for creating complements.
+# Noted here for future reference.
+# base_dict = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'} 
