@@ -6,13 +6,13 @@ def dna_complement(sequence):
 
     for i in b:
         if (i.upper() == "A"):
-            a += i
+            a += "T"
         elif(i.upper() == "T"):
-            a += i
+            a += "A"
         elif(i.upper() == "G"):
-            a += i
+            a += "C"
         elif(i.upper() == "C"):
-            a += i
+            a += "G"
         else:
             print("Your bases are incorrect.")
             return None
