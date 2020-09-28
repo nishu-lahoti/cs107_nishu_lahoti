@@ -27,7 +27,7 @@ def make_withdrawal(init_balance):
 
 ## DEMO ERROR EXPLANATION ##
 
-print('The withdrawal amounts are appended to the series list, which is bound to the closure. The items within the series are contained within cells and these cells are maintained in their own repository to be called upon when the function is later invoked. I found this interesting because I tested this function inside Jupyter notebook and found that the values were presented after each execution. This is not happening in terminal.')
+print('''\nThe withdrawal amounts are appended to the series list, which is bound to the closure. The items within the series are contained within cells and these cells are maintained in their own repository to be called upon when the function is later invoked. I found this interesting because I tested this function inside Jupyter notebook and found that the values were presented after each execution. This is not happening in terminal.\n''')
 
 ## END DEMO EXPLANATION ##
 
