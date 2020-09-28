@@ -1,4 +1,5 @@
-# Start Closure Definition
+## START CLOSURE DEFINITION ##
+
 def make_withdrawal(init_balance):
   # Creating an empty list in which new withdrawal amounts can be added and accumulated.
   series = []
@@ -22,7 +23,13 @@ def make_withdrawal(init_balance):
   
   return withdrawal_amount
 
-# End Closure Definition
+## END CLOSURE DEFINITION ##
+
+## DEMO ERROR EXPLANATION ##
+
+print('The withdrawal amounts are appended to the series list, which is bound to the closure. The items within the series are contained within cells and these cells are maintained in their own repository to be called upon when the function is later invoked. I found this interesting because I tested this function inside Jupyter notebook and found that the values were presented after each execution. This is not happening in terminal.')
+
+## END DEMO EXPLANATION ##
 
 # Demo
 
@@ -30,8 +37,3 @@ wd = make_withdrawal(1000)
 wd(100)
 wd(200)
 
-## DEMO ERROR EXPLANATION ##
-
-print('The withdrawal amounts are appended to the series list, which is bound to the closure. The items within the series are contained within cells and these cells are maintained in their own repository to be called upon when the function is later invoked. I found this interesting because I tested this function inside Jupyter notebook and found that the values were presented after each execution. This is not happening in terminal.')
-
-## END DEMO EXPLANATION ##
