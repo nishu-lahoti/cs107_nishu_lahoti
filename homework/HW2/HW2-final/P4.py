@@ -52,4 +52,6 @@ pts = [[x_hour, y_hour],
 
 arr = np.array(pts)
 plt.plot([np.zeros(3), arr[:, 0]], [np.zeros(3), arr[:, 1]])
+plt.axis([-4, 4, -4, 4])
+
 plt.show()
