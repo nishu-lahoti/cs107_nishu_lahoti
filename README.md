@@ -1,3 +1,8 @@
+# Playground
+
+A place to play with `git`.
+
+### Fall 2020
 # cs107_nishu_lahoti
 
 ## Content
