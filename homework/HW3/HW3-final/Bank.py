@@ -39,13 +39,41 @@ class BankUser():
     
     # Not certain how to verify whether or not a user already has an account.
     # How to account for two specific accounts.
-    def addAccount(self, accountType: AccountType):
-        if hasattr(self, accountType):
-            print("You already have this type of account.")
+    def addAccount(self, accountType):
+        if accountType == "CHECKING":
+            self.checking = accountType
+            self.checking_balance = 0
+            print("You have successfully created a {} account".format(self.checking))
+        elif accountType == "SAVINGS":
+            self.savings = accountType
+            self.saving_balance = 0
+            print("You have successfully created a {} account".format(self.savings))
         else:
-            self.accountType = accountType
-            self.balance = 0
-            print("You have successfully created a {} account".format(self.accountType))
+            print("Please enter CHECKING or SAVINGS.")
+            
+    def deposit(self, accountType, amount):
+        if accountType == "CHECKING":
+            self.checking_balance += amount
+        elif accountType == "SAVINGS":
+            self.saving_balance +=amount
+
+    def withdraw(self, accountType, amount):
+        if accountType == "CHECKING":
+            if self.checking_balance >= amount:
+                self.checking_balance += amount
+        elif accountType == "SAVINGS":
+            if self.checking_balance >= amount:
+                self.checking_balance += amount
+        else:
+            print("Withrdawal over limit.")
+            
+        
+        # if hasattr(self, accountType):
+        #     print("You already have this type of account.")
+        # else:
+        #     self.accountType = accountType
+        #     self.balance = 0
+        #     print("You have successfully created a {} account".format(self.accountType))
 
     # How are we supposed to return a nonexistent balance? Where do we set the balance?
     def getBalance(self, accountType):
