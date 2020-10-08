@@ -6,10 +6,11 @@ class AccountType(Enum):
 
 class BankAccount():
 
-    def __init__(self, owner, accountType: AccountType, balance):
+    # Should I be definining an initial balance here?
+    def __init__(self, owner, accountType: AccountType):
         self.owner = owner
         self.accountType = accountType
-        self.balance = balance
+        self.balance = 0
 
     def withdraw(self, amount):
         if self.balance >= amount:
@@ -26,12 +27,37 @@ class BankAccount():
     def __str__(self):
         return "Hello {0} you have accessed your {1} account!".format(self.owner, self.accountType)
     
+    # Struggling with returning the balance value.
     def __len__(self):
         return len(self.balance)
 
-a1 = BankAccount("Nishu", "CHECKING", 100000)
 
-a1.deposit(1000)
-a1.withdraw(5000)
-str(a1)
-len(a1)
+class BankUser():
+
+    def __init__(self, owner):
+        self.owner = owner
+    
+    # Not certain how to verify whether or not a user already has an account.
+    # How to account for two specific accounts.
+    def addAccount(self, accountType: AccountType):
+        if hasattr(self, accountType):
+            print("You already have this type of account.")
+        else:
+            self.accountType = accountType
+            self.balance = 0
+            print("You have successfully created a {} account".format(self.accountType))
+
+    # How are we supposed to return a nonexistent balance? Where do we set the balance?
+    def getBalance(self, accountType):
+        
+    def deposit(self, accountType, amount):
+        self.balance += amount
+
+    def withdraw(self, accountType, amount):
+        if self.balance >= amount:
+            self.balance -= amount
+        else:
+            print("Withrdawal over limit.")
+
+    def __str__(self):
+        return "Hello {0}, you have just created a {1} account!".format(self.owner, self.accountType)
