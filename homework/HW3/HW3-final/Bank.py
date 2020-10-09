@@ -60,8 +60,14 @@ class BankUser():
         elif (accountType == AccountType.CHECKING.name) and (self.accountType.checking != None):
             print("You have already opened a CHECKINGS account.")
     
-    # How are we supposed to return a nonexistent balance? Where do we set the balance?
     def getBalance(self, accountType):
+        if (accountType == AccountType.SAVINGS.name):
+            # print("You have {} in your SAVINGS account.").format(self.accountType.savings.balance)
+            return self.accountType.savings.balance
+
+        elif (accountType == AccountType.CHECKING.name):
+            # print("You have {} in your CHECKING account.").format(self.accountType.checking.balance)
+            return self.accountType.checking.balance
 
     def deposit(self, accountType, amount):
         if (accountType == AccountType.SAVINGS.name):
@@ -74,7 +80,7 @@ class BankUser():
 
         if (accountType == AccountType.SAVINGS.name) and (self.accountType.savings.balance >= amount):
             self.accountType.savings.balance -= amount
-            print("You have successfully withdrawn {0} from your SAVING account. You have {1}".format(amount, self.accountType.saving.balance))
+            print("You have successfully withdrawn {0} from your SAVING account. You have {1}".format(amount, self.accountType.savings.balance))
         
         elif (accountType == AccountType.CHECKING.name) and (self.accountType.checking.balance >= amount):
             self.accountType.checking.balance -= amount
@@ -82,7 +88,7 @@ class BankUser():
 
         elif (accountType == AccountType.SAVINGS.name) and (self.accountType.savings.balance < amount):
             print("Withdrawal over limit. You only have {} amount in your SAVINGS account.".format(self.accountType.savings.balance))
-            
+
         elif (accountType == AccountType.CHECKING.name) and (self.accountType.checking.balance < amount):
             print("Withdrawal over limit. You only have {} amount in your CHECKING account.".format(self.accountType.checking.balance))
 
