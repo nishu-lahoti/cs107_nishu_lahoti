@@ -113,10 +113,6 @@ class BankUser():
 
 
 
-
-
-
-
 # class BankAccount():
 
 #     # Defining initialization function with owner, accountType (from enum), and account balance.
