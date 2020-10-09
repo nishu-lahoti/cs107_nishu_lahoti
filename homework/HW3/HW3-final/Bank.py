@@ -48,11 +48,13 @@ class BankUser():
             self.accountType.savings = AccountType.SAVINGS
             self.accountType.savings.balance = 0
             print("You have successfully created a {} account".format(self.accountType.savings.name))
+            return self.accountType.savings
 
         elif (accountType == AccountType.CHECKING.name) and (self.accountType.checking == None):
             self.accountType.checking = AccountType.CHECKING
             self.accountType.checking.balance = 0
             print("You have successfully created a {} account".format(self.accountType.checking.name))
+            return self.accountType.checking
 
         elif (accountType == AccountType.SAVINGS.name) and (self.accountType.savings != None):
             print("You have already opened a SAVINGS account.")
@@ -61,6 +63,7 @@ class BankUser():
             print("You have already opened a CHECKINGS account.")
     
     def getBalance(self, accountType):
+
         if (accountType == AccountType.SAVINGS.name):
             # print("You have {} in your SAVINGS account.").format(self.accountType.savings.balance)
             return self.accountType.savings.balance
@@ -69,28 +72,41 @@ class BankUser():
             # print("You have {} in your CHECKING account.").format(self.accountType.checking.balance)
             return self.accountType.checking.balance
 
+        else:
+            print("You do not have this type of account. Please enter CHECKING or SAVINGS.")
+
     def deposit(self, accountType, amount):
         if (accountType == AccountType.SAVINGS.name):
             self.accountType.savings.balance += amount
+            return self.accountType.savings
 
         elif (accountType == AccountType.CHECKING.name):
             self.accountType.checking.balance += amount
+            return self.accountType.checking
+        else:
+            print("You do not have this type of account. Please enter CHECKING or SAVINGS.")
 
     def withdraw(self, accountType, amount):
 
         if (accountType == AccountType.SAVINGS.name) and (self.accountType.savings.balance >= amount):
             self.accountType.savings.balance -= amount
             print("You have successfully withdrawn {0} from your SAVING account. You have {1}".format(amount, self.accountType.savings.balance))
+            return self.accountType.savings
+
         
         elif (accountType == AccountType.CHECKING.name) and (self.accountType.checking.balance >= amount):
             self.accountType.checking.balance -= amount
             print("You have successfully withdrawn {0} from your CHECKING account. You have {1}".format(amount, self.accountType.checking.balance))
+            return self.accountType.savings
 
         elif (accountType == AccountType.SAVINGS.name) and (self.accountType.savings.balance < amount):
             print("Withdrawal over limit. You only have {} amount in your SAVINGS account.".format(self.accountType.savings.balance))
 
         elif (accountType == AccountType.CHECKING.name) and (self.accountType.checking.balance < amount):
             print("Withdrawal over limit. You only have {} amount in your CHECKING account.".format(self.accountType.checking.balance))
+        
+        else:
+            print("You do not have this type of account. Please enter CHECKING or SAVINGS.")
 
     def __str__(self):
         return "Hello {0}, you have just created a {1} account!".format(self.owner, self.accountType)
