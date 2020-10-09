@@ -33,7 +33,7 @@ class BankAccount():
     
     # Struggling with returning the balance value.
     def __len__(self):
-        return len(self.accountType.balance)
+        return len(self.balance)
 
 
 class BankUser():
@@ -74,11 +74,11 @@ class BankUser():
 
         if (accountType == AccountType.SAVINGS.name):
             # print("You have {} in your SAVINGS account.").format(self.accountType.savings.balance)
-            return self.savings.balance
+            return len(self.savings)
 
         elif (accountType == AccountType.CHECKING.name):
             # print("You have {} in your CHECKING account.").format(self.accountType.checking.balance)
-            return self.checking.balance
+            return len(self.checking)
 
         else:
             print("You do not have this type of account. Please enter CHECKING or SAVINGS.")
