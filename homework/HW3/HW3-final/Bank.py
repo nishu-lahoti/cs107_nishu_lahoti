@@ -19,7 +19,6 @@ class BankAccount():
         else:
             print("Withrdawal over limit.")
 
-
     def deposit(self, amount):
         self.balance += amount
         print("\n You have deposited ", amount)
@@ -36,20 +35,40 @@ class BankUser():
 
     def __init__(self, owner):
         self.owner = owner
+        self.checking = None
+        self.savings = None
     
     # Not certain how to verify whether or not a user already has an account.
     # How to account for two specific accounts.
     def addAccount(self, accountType):
-        if accountType == "CHECKING":
-            self.checking = accountType
-            self.checking_balance = 0
-            print("You have successfully created a {} account".format(self.checking))
-        elif accountType == "SAVINGS":
-            self.savings = accountType
+        # Possibly use enum syntax here AccountType.Checking.name
+
+        if (accountType == AccountType.SAVINGS) and (self.savings == None):
+            self.savings = AccountType.SAVINGS
             self.saving_balance = 0
-            print("You have successfully created a {} account".format(self.savings))
+            print("You have successfully created a {} account".format(self.savings.name))
+
         else:
-            print("Please enter CHECKING or SAVINGS.")
+            print("You have already opened a SAVINGS account.")
+
+        if (accountType == AccountType.CHECKING) and (self.checking == None):
+            self.checking = AccountType.CHECKING
+            self.checking_balance = 0
+            print("You have successfully created a {} account".format(self.checking.name))
+
+        else: 
+            print("You have already opened a CHECKINGS account.")
+
+        # if accountType == "CHECKING":
+        #     # self.checking = accountType
+        #     self.checking_balance = 0
+        #     print("You have successfully created a {} account".format(self.checking))
+        # elif accountType == "SAVINGS":
+        #     # self.savings = accountType
+        #     self.saving_balance = 0
+        #     print("You have successfully created a {} account".format(self.savings))
+        # else:
+        #     print("Please enter CHECKING or SAVINGS.")
             
     def deposit(self, accountType, amount):
         if accountType == "CHECKING":
@@ -65,7 +84,7 @@ class BankUser():
             if self.checking_balance >= amount:
                 self.checking_balance += amount
         else:
-            print("Withrdawal over limit.")
+            print("Withdrawal over limit.")
             
         
         # if hasattr(self, accountType):
