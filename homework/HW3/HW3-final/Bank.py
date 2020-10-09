@@ -11,15 +11,16 @@ class BankAccount():
     def __init__(self, owner, accountType: AccountType):
         self.owner = owner
         self.accountType = accountType
-        self.accountType.balance = 0
+        # self.accountType.balance = 0
 
     # Defining withdraw function, which decrements the balance amount from the specific account specified.
-    def withdraw(self, amount):
+    def withdraw(self, amount):   
+
         if self.accountType.balance >= amount:
             self.accountType.balance -= amount
             print("\n You have withdrawn ", amount)
         else:
-            print("Withrdawal over limit.")
+            print("Withdrawal over limit.")
 
     def deposit(self, amount):
         self.accountType.balance += amount
@@ -37,15 +38,17 @@ class BankUser():
 
     def __init__(self, owner):
         self.owner = owner
-        self.accountType = AccountType
-        self.accountType.savings = None
-        self.accountType.checking = None
+        # self.accountType = BankAccount(owner)
+        self.savings = None
+        self.checking = None
     
     def addAccount(self, accountType):
         # Possibly use enum syntax here AccountType.Checking.name
+        # Define savings as a Bank Account object
 
         if (accountType == AccountType.SAVINGS.name) and (self.accountType.savings == None):
-            self.accountType.savings = AccountType.SAVINGS
+            # Using BankAccount object
+            self.savings = BankAccount(self.owner, accountType)
             self.accountType.savings.balance = 0
             print("You have successfully created a {} account".format(self.accountType.savings.name))
             return self.accountType.savings
