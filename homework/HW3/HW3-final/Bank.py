@@ -115,3 +115,42 @@ class BankUser():
 
     def __str__(self):
         return "Hello {0}, you have just created a {1} account!".format(self.owner, self.accountType)
+
+
+def ATMSession(bankUser):
+
+    newUser = BankUser(bankUser)
+    
+    def Interface(userInput):
+        
+        try:
+            userInput = int(input("Enter Option: \n1) Exit \n2) Create Account \n3) Check Balance \n4) Deposit \n5) Withdraw \n"))
+
+        except ValueError:
+            print("Error! This is not a number. Try again.")
+
+        
+        if userInput == 1:
+            print("Thank you and goodbye!")
+            
+        elif userInput == 2:
+            try:
+                inputAccount = int(input("Enter Option: \n1) Checking \n 2) Savings"))
+
+                if inputAccount == 1:
+                        newUser.addAccount(AccountType.CHECKING)
+                        checking_amount = int(input("Enter Integer Amount, Cannot Be Negative: "))
+                        newUser.deposit(AccountType.CHECKING, checking_amount)
+                    
+                elif inputAccount == 2:
+                        newUser.addAccount(AccountType.SAVINGS)
+                        saving_amount = int(input("Enter Integer Amount, Cannot Be Negative: "))
+                        newUser.deposit(AccountType.SAVINGS, saving_amount)
+
+            except ValueError:
+                print("Error! You must enter either 1 or 2. Try again.")
+
+    return Interface
+
+
+ATMSession("Nishu")
