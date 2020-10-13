@@ -25,9 +25,15 @@ class Regression():
 class LinearRegression(Regression):
     
     def fit(self, X, y):
-        X = np.array(X).reshape(-1, 1)
-        y = np.array(y).reshape(-1, 1)
-        self.params = {X, y}
+        (n, p) = X.shape
+        x_new = np.append(X, np.ones((n, 1)), axis = 1)
+        beta = inv(np.transpose(x_new) * x_new) * (np.transpose * y)
+        self.params = {'intercept': beta[-1], 'coefficients': beta[:-1]}
 
     def predict(self, X):
-        self.coef = {np.inv(np.transpose(X) * X) * (np.transpose * self.get_params(X)), self.get_params(X)}
+        ols =  X * self.params['coefficients'] + self.params['intercept']
+        return ols
+
+
+class RidgeRegression(LinearRegression):
+    
