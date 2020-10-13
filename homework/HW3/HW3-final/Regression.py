@@ -37,3 +37,11 @@ class LinearRegression(Regression):
 
 class RidgeRegression(LinearRegression):
     
+    def __init__(self):
+        self.alpha = 0.1
+
+    def fit(self, X, y):
+        (n, p) = X.shape
+        x_new = np.append(X, np.ones((n, 1)), axis = 1)
+        beta = (inv(np.transpose(x_new) * x_new) + (inv(self.alpha) * self.alpha)) * (np.transpose * y)
+        self.params = {'intercept': beta[-1], 'coefficients': beta[:-1]}
