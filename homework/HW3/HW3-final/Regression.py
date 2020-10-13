@@ -1,4 +1,5 @@
 import numpy as np
+import np.linalg.pinv as inv
 
 class Regression():
 
@@ -12,6 +13,7 @@ class Regression():
         raise NotImplementedError
 
     def fit(self, X, y):
+        # self.params = {X : y}
         raise NotImplementedError
 
     def predict(self, X):
@@ -19,3 +21,13 @@ class Regression():
 
     def score(self, X, y):
         raise NotImplementedError
+
+class LinearRegression(Regression):
+    
+    def fit(self, X, y):
+        X = np.array(X).reshape(-1, 1)
+        y = np.array(y).reshape(-1, 1)
+        self.params = {X, y}
+
+    def predict(self, X):
+        self.coef = {np.inv(np.transpose(X) * X) * (np.transpose * self.get_params(X)), self.get_params(X)}
