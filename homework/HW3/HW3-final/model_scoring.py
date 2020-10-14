@@ -16,6 +16,6 @@ for model in models:
     model.fit(X_train, y_train)
     print("Intercept: ", model.get_params()['intercept'])
     print("Coefficient: ", model.get_params()['coefficients'])
-    # print("Score: ", model.score(X_train, y_train))
+    print("Score: ", model.score(X_test, y_test))
 
     

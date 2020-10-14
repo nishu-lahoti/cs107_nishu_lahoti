@@ -58,16 +58,17 @@ class LinearRegression(Regression):
     # determine the linear regression.
 
     def predict(self, X):
-        ols =  X * self.params['coefficients'] + self.params['intercept']
+        ols =  np.dot(X, self.params['coefficients']) + self.params['intercept']
         return ols
 
     # Applies the formulas in the prompt to determine the R2 score.
     def score(self, X, y):
+        y_mean = np.mean(y)
         y_predicted = self.predict(X)
-        sst = ((y - np.mean(y))**2).sum()
-        sse = ((y - y_predicted)**2).sum()
-        R2 = 1 - (sst / sse)
-        return print(R2)
+        sst = np.sum((y - y_mean)**2)
+        sse = np.sum((y - y_predicted)**2)
+        R2 = 1 - (sse / sst)
+        return R2
 
 
 class RidgeRegression(LinearRegression):
@@ -97,14 +98,15 @@ class RidgeRegression(LinearRegression):
 
     # Similarly uses the y = X*B equation to compute predicted values.
     def predict(self, X):
-        ridge = X * self.params['coefficients'] + self.params['intercept']
+        ridge = np.dot(X,self.params['coefficients']) + self.params['intercept']
         print(self.get_params()['intercept'])
         return ridge
 
     # Applies the formulas in the prompt to determine the R2 score.
     def score(self, X, y):
+        y_mean = np.mean(y)
         y_predicted = self.predict(X)
-        sst = ((y - np.mean(y))**2).sum()
-        sse = ((y - y_predicted)**2).sum()
-        R2 = 1 - (sst / sse)
-        return print(R2)
+        sst = np.sum((y - y_mean)**2)
+        sse = np.sum((y - y_predicted)**2)
+        R2 = 1 - (sse / sst)
+        return R2
