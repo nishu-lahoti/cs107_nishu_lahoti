@@ -11,7 +11,7 @@ def test_over_withdrawal(): #this test function should throw an Exception or Err
         print(excep)
 
 
-def test_null_account():
+def test_null_account(): #this tests whether or not the account exists
     newUser = BankUser("Nishu")
     newUser.addAccount(AccountType.SAVINGS)
     newUser.deposit(AccountType.SAVINGS, 1000)
@@ -21,7 +21,7 @@ def test_null_account():
     except Exception as excep:
         print(excep)
 
-def withdraw_negative_amount():
+def withdraw_negative_amount(): #this tests if the user is trying to withdraw a negative amount
     newUser = BankUser("Nishu")
     newUser.addAccount(AccountType.SAVINGS)
     newUser.deposit(AccountType.SAVINGS, 1000)
@@ -31,7 +31,7 @@ def withdraw_negative_amount():
     except Exception as excep:
         print(excep)
 
-def test_duplicate_account():
+def test_duplicate_account(): #this tests if the accounta already exists
     newUser = BankUser("Nishu")
     newUser.addAccount(AccountType.CHECKING)
 
@@ -40,7 +40,7 @@ def test_duplicate_account():
     except Exception as excep:
         print(excep)
 
-def test_get_balance():
+def test_get_balance(): #this tests if the user is trying to get a balance for a nonexistent account
     newUser = BankUser("Nishu")
     newUser.addAccount(AccountType.CHECKING)
     newUser.deposit(AccountType.CHECKING, 1000)
