@@ -21,10 +21,12 @@ class BankAccount():
 
         elif self.balance >= amount:
             self.balance -= amount
-            print("\nYou have withdrawn {0} amount from your {1} account.".format(amount, self.accountType))
+            print("\nYou have withdrawn {0} amount from your {1} account. Your total balance is now {2}.".
+            format(amount, self.accountType.name, self.balance))
 
         elif self.balance < amount:
-            print("\nWithdrawal over limit. You only have {0} amount in your {1} account.".format(self.accountType.balance, self.accountType))
+            print("\nWithdrawal over limit. You only have {0} amount in your {1} account. Your total balance is now {2}.".
+            format(self.accountType.balance, self.accountType.name, self.balance))
 
     def deposit(self, amount):
 
@@ -32,14 +34,15 @@ class BankAccount():
             print("\n You cannot deposit a negative amount.")
         elif amount >= 0:
             self.balance += amount
-            print("\nYou have deposited {0} into your {1} account.".format(amount, self.accountType))
+            print("\nYou have deposited {0} into your {1} account. Your total balance is now {2}.".
+            format(amount, self.accountType.name, self.balance))
 
     def __str__(self):
-        return "\nHello {0} you have accessed your {1} account!".format(self.owner, self.accountType)
+        return "\nHello {0} you have accessed your {1} account!".format(self.owner, self.accountType.name)
     
     # Struggling with returning the balance value.
     def __len__(self):
-        return len(self.balance)
+        return self.balance
 
 
 class BankUser():
@@ -79,12 +82,12 @@ class BankUser():
     def getBalance(self, accountType):
 
         if (accountType == AccountType.SAVINGS):
-            # print("You have {} in your SAVINGS account.").format(self.accountType.savings.balance)
-            return len(self.savings)
+            x = len(self.savings)
+            return ("You have {} in your SAVINGS account.").format(x)
 
         elif (accountType == AccountType.CHECKING):
-            # print("You have {} in your CHECKING account.").format(self.accountType.checking.balance)
-            return len(self.checking)
+            x = len(self.checking)
+            return ("You have {} in your CHECKING account.").format(x)
 
         else:
             print("You do not have this type of account. Please enter CHECKING or SAVINGS.")
@@ -117,40 +120,84 @@ class BankUser():
         return "Hello {0}, you have just created a {1} account!".format(self.owner, self.accountType)
 
 
-def ATMSession(bankUser):
-
-    newUser = BankUser(bankUser)
+def ATMSession(bankUser: BankUser):
     
-    def Interface(userInput):
+    def Interface():
         
-        try:
-            userInput = int(input("Enter Option: \n1) Exit \n2) Create Account \n3) Check Balance \n4) Deposit \n5) Withdraw \n"))
+        while True:
 
-        except ValueError:
-            print("Error! This is not a number. Try again.")
-
-        
-        if userInput == 1:
-            print("Thank you and goodbye!")
-            
-        elif userInput == 2:
             try:
-                inputAccount = int(input("Enter Option: \n1) Checking \n 2) Savings"))
-
-                if inputAccount == 1:
-                        newUser.addAccount(AccountType.CHECKING)
-                        checking_amount = int(input("Enter Integer Amount, Cannot Be Negative: "))
-                        newUser.deposit(AccountType.CHECKING, checking_amount)
-                    
-                elif inputAccount == 2:
-                        newUser.addAccount(AccountType.SAVINGS)
-                        saving_amount = int(input("Enter Integer Amount, Cannot Be Negative: "))
-                        newUser.deposit(AccountType.SAVINGS, saving_amount)
+                userInput = int(input("Enter Option: \n1) Exit \n2) Create Account \n3) Check Balance \n4) Deposit \n5) Withdraw \n"))
 
             except ValueError:
-                print("Error! You must enter either 1 or 2. Try again.")
+                print("Error! This is not a number. Try again.")
 
-    return Interface
+            if userInput == 1:
+                print("Thank you and goodbye!")
+                break
+                
+            elif userInput == 2:
+                try:
+                    inputAccount = int(input("Enter Option: \n1) Checking \n2) Savings\n"))
+
+                    if inputAccount == 1:
+                            bankUser.addAccount(AccountType.CHECKING)
+                            checking_amount = int(input("Enter Integer Amount, Cannot Be Negative: "))
+                            bankUser.deposit(AccountType.CHECKING, checking_amount)
+                        
+                    elif inputAccount == 2:
+                            bankUser.addAccount(AccountType.SAVINGS)
+                            saving_amount = int(input("Enter Integer Amount, Cannot Be Negative: "))
+                            bankUser.deposit(AccountType.SAVINGS, saving_amount)
+
+                except ValueError:
+                    print("Error! You must enter either 1 or 2. Try again.")
+            
+            elif userInput == 3:
+                try:
+                    inputAccount = int(input("Enter Option: \n1) Checking \n2) Savings\n"))
+
+                    if inputAccount == 1:
+                            bankUser.getBalance(AccountType.CHECKING)
+                        
+                    elif inputAccount == 2:
+                            bankUser.getBalance(AccountType.SAVINGS)
+
+                except ValueError:
+                    print("Error! You must enter either 1 or 2. Try again.")
+
+            elif userInput == 4:
+                try:
+                    inputAccount = int(input("Enter Option: \n1) Checking \n2) Savings\n"))
+
+                    if inputAccount == 1:
+                            deposit_amt = int(input("Enter Integer Amount, Cannot Be Negative: "))
+                            bankUser.deposit(AccountType.CHECKING, deposit_amt)
+                        
+                    elif inputAccount == 2:
+                            deposit_amt = int(input("Enter Integer Amount, Cannot Be Negative: "))
+                            bankUser.deposit(AccountType.SAVINGS, deposit_amt)
+
+                except ValueError:
+                    print("Error! You must enter either 1 or 2. Try again.")
+
+            elif userInput == 5:
+                try:
+                    inputAccount = int(input("Enter Option: \n1) Checking \n2) Savings\n"))
+
+                    if inputAccount == 1:
+                            withdraw_amt = int(input("Enter Integer Amount, Cannot Be Negative: "))
+                            bankUser.withdraw(AccountType.CHECKING, withdraw_amt)
+                        
+                    elif inputAccount == 2:
+                            withdraw_amt = int(input("Enter Integer Amount, Cannot Be Negative: "))
+                            bankUser.withdraw(AccountType.SAVINGS, withdraw_amt)
+
+                except ValueError:
+                    print("Error! You must enter either 1 or 2. Try again.")
+
+    return Interface()
 
 
-ATMSession("Nishu")
+newUser = BankUser("Nishu")
+ATMSession(newUser)
