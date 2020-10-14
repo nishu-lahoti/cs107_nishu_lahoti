@@ -9,21 +9,13 @@ X_train, X_test, y_train, y_test = train_test_split(dataset['data'],
                                                     random_state=42)
 
 
-lr = LinearRegression()
-lr.fit(X_train, y_train)
+alpha = 0.1
+models = [LinearRegression(), RidgeRegression(alpha)]
 
-print("Intercept: ", lr.get_params()['intercept'])
-print("Coefficients: ", lr.get_params()['coefficients'])
-
-
-alpha = 0.5
-ridge = RidgeRegression(alpha)
-print("Intercept: ", ridge.get_params()['intercept'])
-print("Coefficients: ", ridge.get_params()['coefficients'])
-
-# models = [LinearRegression(), RidgeRegression(alpha)]
-
-# for model in models:
-#     model.fit(X_train, y_train);
+for model in models:
+    model.fit(X_train, y_train)
+    print("Intercept: ", model.get_params()['intercept'])
+    print("Coefficient: ", model.get_params()['coefficients'])
+    # print("Score: ", model.score(X_train, y_train))
 
     

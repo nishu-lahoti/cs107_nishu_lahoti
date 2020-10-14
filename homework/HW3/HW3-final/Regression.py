@@ -39,6 +39,9 @@ class LinearRegression(Regression):
     # Puts this all together into a beta value which is passed into self.params
     # dictionary.
 
+    def __init__(self):
+        super(LinearRegression, self).__init__()
+
     def fit(self, X, y):
         (n, p) = X.shape
         x_new = np.append(X, np.ones((n, 1)), axis = 1)
@@ -60,17 +63,18 @@ class LinearRegression(Regression):
 
     # Applies the formulas in the prompt to determine the R2 score.
     def score(self, X, y):
-        y_mean = np.mean(y)
-        y_predicted = self.get_params()['intercept']
-        ss_t = np.sum(np.squre((y - y_mean)))
-        ss_e = np.sum(np.square(y - y_predicted)) 
-        r_squared = 1 - (ss_t / ss_e)
+        y_predicted = self.predict(X)
+        sst = ((y - np.mean(y))**2).sum()
+        sse = ((y - y_predicted)**2).sum()
+        R2 = 1 - (sst / sse)
+        return print(R2)
 
 
 class RidgeRegression(LinearRegression):
     
     # Initializes the class with the alpha parameter.
     def __init__(self, alpha):
+        super(RidgeRegression, self).__init__()
         self.params['alpha'] = alpha
 
     # Similar to the strategy from above, computes the beta coefficients from the inside
@@ -80,39 +84,27 @@ class RidgeRegression(LinearRegression):
     def fit(self, X, y):
         (n, p) = X.shape
 
-        reg = np.matmul(self.params['alpha'], np.identity(p))
         x_new = np.append(X, np.ones((n, 1)), axis = 1)
+        reg = np.dot(self.params['alpha'], np.identity(p+1))
         x_transpose = np.transpose(x_new)
-        inner = np.linalg.inv(np.matmul(x_transpose, x_new) + reg)
+        inner = x_transpose.dot(x_new) + reg
+        inner_inv = np.linalg.inv(inner)
+        # inner = reg + np.linalg.inv(np.matmul(x_transpose, x_new))
         outer = np.matmul(x_transpose, y)
-        self.beta = np.matmul(inner, outer)
+        self.beta = np.matmul(inner_inv, outer)
         # self.beta = (inv(np.transpose(x_new) * x_new) + (inv(self.alpha) * self.alpha)) * (np.transpose * y)
         self.params = {'intercept': self.beta[-1], 'coefficients': self.beta[:-1]}
 
     # Similarly uses the y = X*B equation to compute predicted values.
     def predict(self, X):
         ridge = X * self.params['coefficients'] + self.params['intercept']
+        print(self.get_params()['intercept'])
         return ridge
 
     # Applies the formulas in the prompt to determine the R2 score.
     def score(self, X, y):
-        y_mean = np.mean(y)
-        y_predicted = self.get_params()['intercept']
-        ss_t = np.sum(np.squre((y - y_mean)))
-        ss_e = np.sum(np.square(y - y_predicted)) 
-        r_squared = 1 - (ss_t / ss_e)
-
-### Test ###
-
-# dataset = datasets.load_boston(return_X_y = TRUE)
-# first = sklearn()
-# first.fit(X,y)
-
-# second = LinearRegression()
-# second.fit(X, y)
-
-# print("Intercept: ", first.intercept_)
-# print("Coefficients: ", first.coef_)
-
-# print("Intercept: ", second.get_params()['intercept']
-# print("Coefficients: ", second.get_params()['coefficients'])
+        y_predicted = self.predict(X)
+        sst = ((y - np.mean(y))**2).sum()
+        sse = ((y - y_predicted)**2).sum()
+        R2 = 1 - (sst / sse)
+        return print(R2)
