@@ -33,4 +33,10 @@ ax.plot(x_list, y3, label = r'$f_{FD}(x)$ for h = $1 x 10^{-15}$')
 ax.plot(x_list, deriv,'--', label = 'Analytical Derivative')
 ax.legend(fontsize = 16)
 
+print('''Answer to Q-a: The second value of h, {} most closely approximates the true derivative. 
+        When h is too small the derivative oscillates around the analytical value. When the derivative
+        is too large the values fall below the analytical derivative.''')
+print('''Answer to Q-b: Automatic differentiation allows us to compute the derivative to machine precision
+        without the guesswork shown in this example. In this way, it is less costly.''')
+
 plt.savefig('P1_fig.png')
