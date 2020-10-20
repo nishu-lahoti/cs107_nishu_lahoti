@@ -32,3 +32,5 @@ ax.plot(x_list, y2, label = r'$f_{FD}(x)$ for h = $1 x 10^{-7}$')
 ax.plot(x_list, y3, label = r'$f_{FD}(x)$ for h = $1 x 10^{-15}$')
 ax.plot(x_list, deriv,'--', label = 'Analytical Derivative')
 ax.legend(fontsize = 16)
+
+plt.savefig('P1_fig.png')
