@@ -29,7 +29,6 @@ class AutoDiffToy:
     def __radd__(self, other):
         return self.__add__(other)
 
-
     # Reverse multiply by calling __mul__
     def __rmul__(self, other):
         return self.__mul__(other)
