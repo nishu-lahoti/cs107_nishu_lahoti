@@ -34,10 +34,9 @@ class AutoDiffToy:
     def __rmul__(self, other):
         return self.__mul__(other)
 
-
 # Demo
 
-a = 2
+a = 2 # Value to evaluate at
 x = AutoDiffToy(a)
 
 alpha = 2.0
