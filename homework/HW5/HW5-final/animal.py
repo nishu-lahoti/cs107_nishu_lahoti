@@ -23,11 +23,12 @@ class Animal:
     def __repr__(self):
         return f'{self.name} ({self._species})'
 
-    @property
+    @property # Decocorator for species
     def species(self):
         return self._species
     
-    @species.setter
+    
+    @species.setter # Setter method
     def species(self, into):
         assert into in Animal.valid_species, Exception(f'invalid species: {into}')
         self._species = into
