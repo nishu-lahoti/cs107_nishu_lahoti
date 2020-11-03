@@ -39,6 +39,9 @@ class LinkedList:
             return a if a < b else b
         return smaller(self._head, self._tail.minimum()) if self._tail else self._head
 
+    def for_each(self, fun):
+        return LinkedList(fun(self._head), self._tail.for_each(fun))
+
     def reduce_right(self, fun):
         pass # TODO
 
@@ -60,11 +63,11 @@ class Nil():
     def __bool__(self):
         return False
 
-    def prepend(self, val):
-        pass # TODO
+    def prepend(self, val): # check this
+        return LinkedList(val, Nil())
 
     def append(self, val):
         return LinkedList(val, Nil())
 
     def for_each(self, fun):
-        pass # TODO
+        return Nil()
