@@ -26,3 +26,8 @@ class Animal:
     @property
     def species(self):
         return self._species
+    
+    @species.setter
+    def species(self, into):
+        assert into in Animal.valid_species, Exception(f'invalid species: {into}')
+        self._species = into
