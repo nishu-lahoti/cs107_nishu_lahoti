@@ -25,10 +25,10 @@ class LinkedList:
     def __getitem__(self, i):
         return self._head if i == 0 else self._tail[i-1]
     
-    def prepend(self, val): # return LinkedList(val, self._tail)
+    def prepend(self, val): 
         return LinkedList(val, self)
 
-    def append(self, val): # return LinkedList(self._head, val)
+    def append(self, val): 
         return LinkedList(self._head, self._tail.append(val))
 
     def summation(self):
@@ -43,7 +43,7 @@ class LinkedList:
         return LinkedList(fun(self._head), self._tail.for_each(fun))
 
     def reduce_right(self, fun):
-        pass # TODO
+        return fun(self._tail.reduce_right(fun), self._head) if self._tail else self._head
 
 
 class Nil():
