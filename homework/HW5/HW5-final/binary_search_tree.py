@@ -35,6 +35,11 @@ class BSTTable:
         if self._root is None:
             self._root = BSTNode(key, val)
             self._root.size +=1
+        
+        # how to handle case where key == node.key
+        # elif key == node.key:
+        #     self._put(node, key, val)
+
         elif key < node.key:
             if(node.left):
                 self._put(node.left, key, val)
@@ -54,7 +59,14 @@ class BSTTable:
 
 
     def _get(self, node, key):
-        pass # TODO
+        if node is None:
+            return KeyError
+        elif key == node.key:
+            return self._get(node, key)
+        elif key < node.key:
+            return self._get(node.left, key)
+        else:
+            return self._get(node.right, key)
 
     @staticmethod
     def _size(node):
