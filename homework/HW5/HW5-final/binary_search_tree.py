@@ -1,5 +1,5 @@
-import sys
-sys.setrecursionlimit(10**3) 
+# import sys
+# sys.setrecursionlimit(10**3) 
 
 class BSTNode:
 
@@ -32,37 +32,28 @@ class BSTTable:
         return self._get(self._root, key)
 
     def _put(self, node, key, val):
-        if self._root is None:
-            self._root = BSTNode(key, val)
-            self._root.size +=1
+        if node is None:
+            return BSTNode(key, val)
         
-        # how to handle case where key == node.key
-        # elif key == node.key:
-        #     self._put(node, key, val)
+        elif key == node.key:
+            node.val = val
+            return node
 
         elif key < node.key:
-            if(node.left):
-                self._put(node.left, key, val)
-                node.left.size +=1
-            else:
-                node.left = BSTNode(key, val)
-                node.left.size +=1
-        elif (key > node.key):
-            if(node.right):
-                self._put(node.right, key, val)
-                node.right.size +=1
-            else:
-                node.right = BSTNode(key, val)
-                node.right.size +=1
-        
-        return self._root
+            node.size += 1
+            node.left = self._put(node.left, key, val)
+            return node
 
+        elif key > node.key:
+            node.size += 1
+            node.right = self._put(node.right, key, val)
+            return node
 
     def _get(self, node, key):
         if node is None:
-            return KeyError
-        elif key == node.key:
-            return self._get(node, key)
+            raise KeyError("This node does not exist.")
+        elif node.key == key:
+            return node.val
         elif key < node.key:
             return self._get(node.left, key)
         else:
