@@ -43,7 +43,7 @@ class LinkedList:
         return LinkedList(fun(self._head), self._tail.for_each(fun))
 
     def reduce_right(self, fun):
-        return fun(self._tail.reduce_right(fun), self._head) if self._tail else self._head
+        return fun(self._head, self._tail.reduce_right(fun)) if self._tail else self._head
 
 
 class Nil():

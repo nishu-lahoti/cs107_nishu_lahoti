@@ -16,14 +16,18 @@ def get_list_of_sentences(chapter1 = 'swansway-chapter1.txt'):
 
     return list_of_sentences
 
-def longest_sentence(): # For some reason this is returning only a medium length sentence
-    list_of_sentences = get_list_of_sentences()
-    split_sentences = list_of_sentences.for_each(str.split)
+def longest_sentence():
     
+    list_of_sentences = get_list_of_sentences()
+
+    def word_count(sentence):
+        sentence_length = sentence.split()
+        return len(sentence_length)
+        
+    split_sentences = list_of_sentences.for_each(word_count)
+
     def longest(a, b): # our "combine" function
         return a if a > b else b
         
-    longest_sentence = split_sentences.reduce_right(longest)
-    length = len(longest_sentence)
-
-    return length
+    total_words = split_sentences.reduce_right(longest)
+    return total_words
