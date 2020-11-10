@@ -28,6 +28,8 @@ class LinkedList:
     def prepend(self, val): 
         return LinkedList(val, self)
 
+    # Added append method through a recursive call to LinkedList.
+    # Passed head and tail values.
     def append(self, val): 
         return LinkedList(self._head, self._tail.append(val))
 
@@ -39,9 +41,14 @@ class LinkedList:
             return a if a < b else b
         return smaller(self._head, self._tail.minimum()) if self._tail else self._head
 
+    # Implemeneed for_each method through a recursive LinkedList call.
+    # Returning LinkedList with the function applied to head, tail combo.
+    # Passing function into for_each function attached to tail.
     def for_each(self, fun):
         return LinkedList(fun(self._head), self._tail.for_each(fun))
 
+    # Implemented reduce right function by applying function to head, tail combo.
+    # Passed function into recursive call on the tail.
     def reduce_right(self, fun):
         return fun(self._head, self._tail.reduce_right(fun)) if self._tail else self._head
 
@@ -63,10 +70,10 @@ class Nil():
     def __bool__(self):
         return False
 
-    def prepend(self, val): # check this
+    def prepend(self, val): # Implemented prepend for Nil
         return LinkedList(val, Nil())
 
-    def append(self, val):
+    def append(self, val): # Implemented append for Nil
         return LinkedList(val, Nil())
 
     def for_each(self, fun):

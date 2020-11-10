@@ -20,14 +20,19 @@ def longest_sentence():
     
     list_of_sentences = get_list_of_sentences()
 
+    # Defined word count function to split and return length of each sentence.
     def word_count(sentence):
         sentence_length = sentence.split()
         return len(sentence_length)
-        
+    
+    # Created variable which captures the return of the word count function applied to each
+    # sentence in the list_of_sentences.
     split_sentences = list_of_sentences.for_each(word_count)
 
+    # Defined a function to find the longest sentence in the list.
     def longest(a, b): # our "combine" function
         return a if a > b else b
-        
+
+    # Created a variable to capture the longest sentence in split_sentences 
     total_words = split_sentences.reduce_right(longest)
     return total_words
