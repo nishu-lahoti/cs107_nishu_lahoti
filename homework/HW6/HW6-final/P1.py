@@ -49,23 +49,49 @@ class BSTTable:
         else:
             return node.val
 
-    # Implemented _removemin method
     def _removemin(self, node):
-        
-        # Checks for starting node
         if node is None:
             print("No nodes to delete.")
         
-        # Searches for lower value, reduces size, and returns updated tree
         if node.left is not None:
             node.size -=1
             node.left = self._removemin(node.left)
             return node
-        
-        # Right sub-tree greater than starting point
+
         else:
             return None
+
+    def remove(self, key):
+        self._root = self._remove(self._root, key)
+    
+    def _remove(self, node, key): # Partial Solution
+        if node is None: 
+            raise KeyError(f'key not found: {key}')
         
+        elif key < node.key:
+            node.size -=1
+            node.left = self._remove(node.left, key)
+        
+        elif key > node.key:
+            node.size -=1
+            node.right = self._remove(node.right, key)
+
+        else:
+            if node.left is None:
+                succ = node.right
+                node = None
+                return succ
+            
+            elif node.right is None:
+                succ = node.left
+                node = None
+                return succ
+
+        succ = self._removemin(node.right)
+
+        node.key = succ.key
+    
+        return node
 
     @staticmethod
     def _size(node):
