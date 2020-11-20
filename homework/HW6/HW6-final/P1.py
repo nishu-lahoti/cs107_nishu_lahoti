@@ -53,11 +53,14 @@ class BSTTable:
         if node is None:
             print("No nodes to delete.")
         
-        if node.left is not None:
+        elif node.left is not None:
             node.size -=1
             node.left = self._removemin(node.left)
             return node
 
+        elif node.right is not None:
+            return node.right        
+            
         else:
             return None
 
