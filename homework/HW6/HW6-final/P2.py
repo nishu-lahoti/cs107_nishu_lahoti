@@ -83,11 +83,17 @@ class Heap:
         self.elements.append(key)
         self.size += 1
         current = self.size - 1
-        self.build_heap()
 
+        while (current > 0 and self.elements[current] < self.parent(self.elements)): # Not quite right
+                self.swap(self.size, current)
+
+    # Define for the minimum
+    # Define fo the maximum as well
     def heappop(self) -> int: # return self.parent?
         h = self.elements.pop()
         self.heapify(h)
+
+# The whole flow depends on the Min & Max
 
 class MinHeap(Heap):
 
