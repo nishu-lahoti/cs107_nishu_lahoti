@@ -53,8 +53,11 @@ class Heap:
     
     def __len__(self) -> int:
         return self.size
+
+    def compare(self, a: int, b: int) -> bool:
+        raise NotImplementedError
     
-    def heapify(self, idx: int) -> None:
+    def heapify(self, idx: int) -> None: # Close but not entirely returning the minimum
         
         smallest = idx
         if self.left(idx) < self.size and self.elements[self.left(idx)] < self.elements[idx]:
@@ -69,30 +72,45 @@ class Heap:
             self.heapify(smallest)
 
     def build_heap(self) -> None:
-        
+
         for i in range(self.size):
             self.heapify(i)
 
-    def heappush(self, key: int) -> None:
+    def heappush(self, key: int) -> None: # How to account for if the input key is less than lowest value
         self.elements.append(key)
         self.size += 1
-        self.swap(self.size)
+        self.build_heap()
 
-    def heappop(self) -> int:
-        pass
+    def heappop(self) -> int: # return self.parent?
+        h = self.elements.pop()
+        self.heapify(h)
+
+class MinHeap(Heap):
+
+    def __init__(self):
+        super(Heap, self).__init__()
+
+    def compare(self, a, b:
+        pass # TODO
+
+class MaxHeap(Heap):
+
+    def __init__(self):
+        super(Heap, self).__init__()
 
 
-    # For max heap implementation
-    # def heapify(self, idx: int) -> None:
-            
-    #         largest = idx
-    #         if self.left(idx) < self.size and self.elements[self.left(idx)] > self.elements[idx]:
-    #             largest = self.left(idx)
-            
-    #         if self.right(idx) < self.size and self.elements[self.right(idx)] > self.elements[idx]:
-    #             largest = self.right(idx)
+    def compare(self, a, b):
+        pass # TODO
+        
+        # Implement the code below
+        # largest = idx
+        # if self.left(idx) < self.size and self.elements[self.left(idx)] > self.elements[idx]:
+        #     largest = self.left(idx)
+        
+        # if self.right(idx) < self.size and self.elements[self.right(idx)] > self.elements[idx]:
+        #     largest = self.right(idx)
 
-    #         if largest != idx:
-    #             self.elements[idx], self.elements[largest] = self.elements[largest], self.elements[idx]
+        # if largest != idx:
+        #     self.elements[idx], self.elements[largest] = self.elements[largest], self.elements[idx]
 
-    #             self.heapify(largest)
+        #     self.heapify(largest)
