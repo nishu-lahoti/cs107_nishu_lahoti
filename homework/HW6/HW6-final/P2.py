@@ -76,6 +76,8 @@ class Heap:
         for i in range(self.size):
             self.heapify(i)
 
+    # Iterate through the heap to compare your insert to heap value
+    # Compare what you've added to the parent of what you've added and swap accordingly
     def heappush(self, key: int) -> None: # How to account for if the input key is less than lowest value
         self.elements.append(key)
         self.size += 1

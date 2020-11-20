@@ -59,8 +59,9 @@ class BSTTable:
             return node
 
         elif node.right is not None:
-            return node.right        
-            
+            return node.right     
+
+        # return node       
         else:
             return None
 
@@ -81,21 +82,28 @@ class BSTTable:
 
         else:
             if node.left is None:
-                succ = node.right
-                node = None
-                return succ
+                return node.right
+                # succ = node.right
+                # node = None
+                # return succ
             
             elif node.right is None:
-                succ = node.left
-                node = None
-                return succ
+                return node.left
+                # succ = node.left
+                # node = None
+                # return succ
 
         succ = self._removemin(node.right)
 
-        node.key = succ.key
-    
+        # node.key = succ.key
+        node.size = 1 + self._size(node.left) + self._size(node.right) # Find a way to percolate down tree
         return node
 
     @staticmethod
     def _size(node):
         return node.size if node else 0
+
+    # Define a min function
+    # Call this and save value
+    # Call remove min
+    # And swap value with value at root
