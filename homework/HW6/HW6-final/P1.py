@@ -49,6 +49,15 @@ class BSTTable:
         else:
             return node.val
 
+    def findMin(self, node):
+        if node is None:
+            print("No nodes to delete.")
+        if node.left is not None:
+            node.left = self.findMin(node.left)
+            return node.left
+        else:
+            return node
+
     def _removemin(self, node):
         if node is None:
             print("No nodes to delete.")
@@ -59,11 +68,8 @@ class BSTTable:
             return node
 
         elif node.right is not None:
-            return node.right     
+            return node.right        
 
-        # return node       
-        else:
-            return None
 
     def remove(self, key):
         self._root = self._remove(self._root, key)
@@ -73,37 +79,27 @@ class BSTTable:
             raise KeyError(f'key not found: {key}')
         
         elif key < node.key:
-            node.size -=1
             node.left = self._remove(node.left, key)
         
         elif key > node.key:
-            node.size -=1
             node.right = self._remove(node.right, key)
 
         else:
             if node.left is None:
                 return node.right
-                # succ = node.right
-                # node = None
-                # return succ
             
             elif node.right is None:
                 return node.left
-                # succ = node.left
-                # node = None
-                # return succ
+            
+            succ = self.findMin(node.right)
+            succ.right = self._removemin(node.right)
+            succ.left = node.left
 
-        succ = self._removemin(node.right)
-
-        # node.key = succ.key
+            return succ
+        
         node.size = 1 + self._size(node.left) + self._size(node.right) # Find a way to percolate down tree
-        return node
+        return node 
 
     @staticmethod
     def _size(node):
         return node.size if node else 0
-
-    # Define a min function
-    # Call this and save value
-    # Call remove min
-    # And swap value with value at root
