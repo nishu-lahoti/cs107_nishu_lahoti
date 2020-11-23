@@ -116,28 +116,69 @@ class DFSTraversal():
     
     def __init__(self, tree: BSTTable, traversalType: DFSTraversalTypes):
         self.index = 0
-        self.depth_type = traversalType
         self.tree = tree
-        print(self.tree)
+        self.nodes_list = []
+
+        if traversalType == DFSTraversalTypes.PREORDER or 1:
+            self.preorder(tree)
+        if traversalType == DFSTraversalTypes.INORDER or 2:
+            self.inorder(tree)
+        if traversalType == DFSTraversalTypes.POSTORDER or 3:
+            self.postorder(tree)
 
     def __iter__(self):
-        while self.index < len(self.tree):
-            return self
+        return self
 
-    def __next__(self): # Uncertain how to create the iterator which can access a tree's node
+    def __next__(self): # Iteration not stopping
+
+        # while self.index < len(self.tree._root):
             try:
-                iter()
+                self.index += 1
+                return self.nodes_list[self.index]
             except IndexError:
                 raise StopIteration()
 
-    def inorder(self, bst:BSTTable):
-        # TODO: implement
-        pass
-
     def preorder(self, bst:BSTTable):
-        # TODO: implement
-        pass
+
+        if not self.tree._root:
+            return("Root does not exist")     
+
+        # First print the root note
+        print(self.tree._root)
+
+        # Then go to left child
+        self.preorder(self.tree._root.left)
+
+        # Then go to right child
+        self.prorder(self.tree._root.right)
+
+    def inorder(self, bst:BSTTable):
+
+        if not self.tree._root:
+            return("Root does not exist")  
+
+        # elif (tree._root.left and tree._root.right) is None:
+
+        # # First go to left child
+        self.inorder(self.tree._root.left)
+
+        # Then print the value at the root
+        print(self.tree._root.key)
+
+        # # Then go to the right child
+        self.inorder(self.tree._root.right)
+
 
     def postorder(self, bst:BSTTable):
-        # TODO: implement
-        pass
+        
+        if not self.tree._root:
+            return("Root does not exist") 
+            
+        # First go to left child
+        self.postorder(self.tree._root.left)
+
+        # Then go to right
+        self.postorder(self.tree._root.right)
+
+        # Then print at root
+        print(self.tree._root)

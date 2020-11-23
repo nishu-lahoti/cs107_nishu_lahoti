@@ -33,7 +33,6 @@ class Heap:
                     buf = buf + "|-- "
                 else:
                     buf = buf + "\\-- "
-                # buf = buf + '\033[1m' + str(self.elements[idx]) + '\033[0m' + '\n'
                 buf = buf + str(self.elements[idx]) + '\n' #use if above doesn't work
 
                 new_prefix = prefix
@@ -57,70 +56,64 @@ class Heap:
     def compare(self, a: int, b: int) -> bool:
         raise NotImplementedError
     
-    def heapify(self, idx: int) -> None: # Close but not entirely returning the minimum
-        
-        smallest = idx
-        if self.left(idx) < self.size and self.elements[self.left(idx)] < self.elements[idx]:
-            smallest = self.left(idx)
-        
-        if self.right(idx) < self.size and self.elements[self.right(idx)] < self.elements[idx]:
-            smallest = self.right(idx)
+    def heapify(self, idx: int) -> None: 
+        if self.compare(self.elements[idx], self.elements[self.parent(idx)]):
+            self.swap(idx, self.parent(idx))
 
-        if smallest != idx:
-            self.elements[idx], self.elements[smallest] = self.elements[smallest], self.elements[idx]
-
-            self.heapify(smallest)
+    def verify_heap(self):
+        
+        heap = False
+        for i in range(self.size - 1, 0, -1):
+            if self.compare(self.elements[i], self.elements[self.parent(i)]):
+            # if self.elements[i] < self.elements[self.parent(i)]:
+                heap = True
+            return heap
 
     def build_heap(self) -> None:
 
-        for i in range(self.size):
-            self.heapify(i)
+        while self.verify_heap():
+            for i in range(self.size - 1, 0, -1):
+                self.heapify(i)
 
-    # Iterate through the heap to compare your insert to heap value
-    # Compare what you've added to the parent of what you've added and swap accordingly
-    # Handle for parent going negative through a while loop that doesn't go negative 
-    def heappush(self, key: int) -> None: # How to account for if the input key is less than lowest value
+    def heappush(self, key: int) -> None:
         self.elements.append(key)
         self.size += 1
-        current = self.size - 1
+        self.build_heap()
 
-        while (current > 0 and self.elements[current] < self.parent(self.elements)): # Not quite right
-                self.swap(self.size, current)
+    def heappop(self) -> int:
 
-    # Define for the minimum
-    # Define fo the maximum as well
-    def heappop(self) -> int: # return self.parent?
-        h = self.elements.pop()
-        self.heapify(h)
+        if self.size == 0:
+            raise IndexError("No heap to pop.")
+        
+        self.swap(0, self.size - 1)
+        root = self.elements.pop(self.size - 1)
+        
+        self.size -=1
+        self.build_heap()
+        return root
 
-# The whole flow depends on the Min & Max
 
 class MinHeap(Heap):
 
-    def __init__(self):
-        super(Heap, self).__init__()
+    def __init__(self, array: List[int]) -> None:
+        super().__init__(array)
+    
+    def compare(self, a: int, b: int) -> bool:
+        smallest = False
+        
+        if a < b:
+            smallest = True
+        return smallest
 
-    def compare(self, a, b:
-        pass # TODO
 
 class MaxHeap(Heap):
 
-    def __init__(self):
-        super(Heap, self).__init__()
-
-
-    def compare(self, a, b):
-        pass # TODO
+    def __init__(self, array: List[int]) -> None:
+        super().__init__(array)
+    
+    def compare(self, a: int, b: int) -> bool:
+        largest = False
         
-        # Implement the code below
-        # largest = idx
-        # if self.left(idx) < self.size and self.elements[self.left(idx)] > self.elements[idx]:
-        #     largest = self.left(idx)
-        
-        # if self.right(idx) < self.size and self.elements[self.right(idx)] > self.elements[idx]:
-        #     largest = self.right(idx)
-
-        # if largest != idx:
-        #     self.elements[idx], self.elements[largest] = self.elements[largest], self.elements[idx]
-
-        #     self.heapify(largest)
+        if a > b:
+            largest = True
+        return largest
