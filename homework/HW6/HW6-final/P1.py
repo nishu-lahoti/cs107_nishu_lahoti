@@ -1,3 +1,5 @@
+from enum import Enum
+
 class BSTNode:
 
     def __init__(self, key, val):
@@ -103,3 +105,39 @@ class BSTTable:
     @staticmethod
     def _size(node):
         return node.size if node else 0
+
+
+class DFSTraversalTypes(Enum):
+    PREORDER = 1
+    INORDER = 2
+    POSTORDER = 3
+
+class DFSTraversal():
+    
+    def __init__(self, tree: BSTTable, traversalType: DFSTraversalTypes):
+        self.index = 0
+        self.depth_type = traversalType
+        self.tree = tree
+        print(self.tree)
+
+    def __iter__(self):
+        while self.index < len(self.tree):
+            return self
+
+    def __next__(self): # Uncertain how to create the iterator which can access a tree's node
+            try:
+                iter()
+            except IndexError:
+                raise StopIteration()
+
+    def inorder(self, bst:BSTTable):
+        # TODO: implement
+        pass
+
+    def preorder(self, bst:BSTTable):
+        # TODO: implement
+        pass
+
+    def postorder(self, bst:BSTTable):
+        # TODO: implement
+        pass
