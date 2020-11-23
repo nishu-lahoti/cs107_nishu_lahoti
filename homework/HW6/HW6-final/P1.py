@@ -129,14 +129,17 @@ class DFSTraversal():
     def __iter__(self):
         return self
 
-    def __next__(self): # Iteration not stopping
+    def __next__(self): 
 
-        # while self.index < len(self.tree._root):
-            try:
-                self.index += 1
-                return self.nodes_list[self.index]
-            except IndexError:
-                raise StopIteration()
+        # Create a node object based on each new list item
+        try:
+            node = self.nodes_list[self.index]
+        except IndexError:
+            raise StopIteration()
+
+        # Increment index before next call
+        self.index += 1
+        return node
 
     def preorder(self, bst:BSTTable):
 
@@ -154,20 +157,24 @@ class DFSTraversal():
 
     def inorder(self, bst:BSTTable):
 
-        if not self.tree._root:
-            return("Root does not exist")  
+        def _traversal(self, node = bst._root):
 
-        # elif (tree._root.left and tree._root.right) is None:
+            # Return user if the root node does not exist
+            if not self.node.root:
+                return("Root does not exist")  
+            
+            # Traverse to the left node
+            if node.left is not None:
+                self._traversal(node.left)
 
-        # # First go to left child
-        self.inorder(self.tree._root.left)
+            # Append the root to the node list
+            self.nodes_list.append(node.root)
 
-        # Then print the value at the root
-        print(self.tree._root.key)
-
-        # # Then go to the right child
-        self.inorder(self.tree._root.right)
-
+            # Traverse to the right node         
+            if node.right is not None:
+                self._traversal(node.right)
+        
+        return _traversal
 
     def postorder(self, bst:BSTTable):
         

@@ -57,3 +57,30 @@ def timeit(ns=(10, 20, 50, 100, 200, 500), pqclass = PriorityQueue, n_average = 
         elapsed.append(timeaccum / n_average)
     
     return elapsed
+
+
+class NaivePriorityQueue(PriorityQueue):
+
+    def __init__(self, max_size):
+        super().__init__(max_size)
+
+    def put(self, val):
+        
+        if len(self.elements) > self.max_size - 1:
+            raise IndexError("Max size already reached")
+
+        self.elements.append(val)
+
+    def get(self):
+        
+        getVal = self.peek()
+        self.elements.remove(min(self.elements))
+        return getVal
+
+    def peek(self):
+
+        if not self.elements:
+            raise IndexError("Empty priority queue.")
+
+        minVal = min(self.elements)
+        return minVal
