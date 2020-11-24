@@ -119,12 +119,12 @@ class DFSTraversal():
         self.tree = tree
         self.nodes_list = []
 
-        if traversalType == DFSTraversalTypes.PREORDER or 1:
-            self.preorder(tree)
-        if traversalType == DFSTraversalTypes.INORDER or 2:
-            self.inorder(tree)
-        if traversalType == DFSTraversalTypes.POSTORDER or 3:
-            self.postorder(tree)
+        if traversalType == DFSTraversalTypes.PREORDER:
+            traverse = self.preorder(tree)
+        if traversalType == DFSTraversalTypes.INORDER:
+            traverse = self.inorder(tree)
+        if traversalType == DFSTraversalTypes.POSTORDER:
+            traverse = self.postorder(tree)
 
     def __iter__(self):
         return self
@@ -141,51 +141,50 @@ class DFSTraversal():
         self.index += 1
         return node
 
-    def preorder(self, bst:BSTTable):
-
-        if not self.tree._root:
-            return("Root does not exist")     
-
-        # First print the root note
-        print(self.tree._root)
-
-        # Then go to left child
-        self.preorder(self.tree._root.left)
-
-        # Then go to right child
-        self.prorder(self.tree._root.right)
-
     def inorder(self, bst:BSTTable):
 
-        def _traversal(self, node = bst._root):
+        node_start = bst._root
 
-            # Return user if the root node does not exist
-            if not self.node.root:
-                return("Root does not exist")  
-            
-            # Traverse to the left node
-            if node.left is not None:
-                self._traversal(node.left)
+        def traversal(node):
 
-            # Append the root to the node list
-            self.nodes_list.append(node.root)
+            if node:
+                new_node = BSTNode(node.key, node.val)
+                traversal(node.left)
+                self.nodes_list.append(new_node)
+                traversal(node.right)
+            else:
+                pass
 
-            # Traverse to the right node         
-            if node.right is not None:
-                self._traversal(node.right)
+        traversal(node_start)
+    
+    def preorder(self, bst:BSTTable):
+
+        node_start = bst._root
+    
+        def traversal_pre(node):
+
+            if node:
+                new_node = BSTNode(node.key, node.val)
+                self.nodes_list.append(new_node)
+                traversal_pre(node.left)
+                traversal_pre(node.right)
+            else:
+                pass
         
-        return _traversal
+        traversal_pre(node_start)
 
     def postorder(self, bst:BSTTable):
         
-        if not self.tree._root:
-            return("Root does not exist") 
-            
-        # First go to left child
-        self.postorder(self.tree._root.left)
+        node_start = bst._root
 
-        # Then go to right
-        self.postorder(self.tree._root.right)
+        def traversal_post(node):
 
-        # Then print at root
-        print(self.tree._root)
+            if node:
+                new_node = BSTNode(node.key, node.val)
+                traversal_post(node.left)
+                traversal_post(node.right)
+                self.nodes_list.append(new_node)
+            else:
+                pass
+        
+        traversal_post(node_start)
