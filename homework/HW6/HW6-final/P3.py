@@ -16,13 +16,13 @@ class PriorityQueue:
         return len(self.elements) > 0
 
     def put(self, val):
-        raise NotImplementedError # TODO
+        raise NotImplementedError 
 
     def get(self):
-        raise NotImplementedError # TODO
+        raise NotImplementedError 
 
     def peek(self):
-        raise NotImplementedError # TODO
+        raise NotImplementedError 
 
 def mergesortedlists(lists, pqclass = PriorityQueue):
     merged = []
