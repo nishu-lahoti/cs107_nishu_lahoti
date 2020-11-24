@@ -53,43 +53,70 @@ class Heap:
     def __len__(self) -> int:
         return self.size
 
+    # Implementing compare method per prompt
     def compare(self, a: int, b: int) -> bool:
         raise NotImplementedError
     
     def heapify(self, idx: int) -> None: 
-        if self.compare(self.elements[idx], self.elements[self.parent(idx)]):
-            self.swap(idx, self.parent(idx))
-
-    def verify_heap(self):
         
-        heap = False
-        for i in range(self.size - 1, 0, -1):
-            if self.compare(self.elements[i], self.elements[self.parent(i)]):
-            # if self.elements[i] < self.elements[self.parent(i)]:
-                heap = True
-            return heap
+        # ACADEMIC HONESTY STATEMENT
+        # I worked on this problem in office hours on 11/20, 11/23, and 11/24.
+        # In hoping to understand this problem better, I consulted both my teammates and fellow classmates during these sessions.
+        # For this particular problem, I reviewed my solution with Vikram Shasty and Timothy Williamson. We compared our outputs
+        # and each adapted our code based on the consensus we arrived at for the best methodology.
+
+        # Functions as a min heap method    
+        smallest = idx
+        heap_length = self.size - 1
+
+        # Compare values and indexes of left against elements list
+        if self.left(idx) <= heap_length and self.compare(self.elements[self.left(idx)], self.elements[idx]):
+            smallest = self.left(idx)
+
+        # Compare values and indexes of right against elements list
+        if self.right(idx) <= heap_length and self.compare(self.elements[self.right(idx)], self.elements[smallest]):
+            smallest = self.right(idx)
+
+        # Swapping for lowest values
+        if smallest != idx:
+            self.swap(idx, smallest)
+            self.heapify(smallest)
 
     def build_heap(self) -> None:
 
-        while self.verify_heap():
-            for i in range(self.size - 1, 0, -1):
-                self.heapify(i)
+        # Building the heap based on the last element of heap and iterating until floor
+        for i in reversed(range(len(self.elements) // 2)):
+            self.heapify(i)
 
     def heappush(self, key: int) -> None:
         self.elements.append(key)
-        self.size += 1
-        self.build_heap()
+
+        # Increase size of element list and set value for element before last
+        self.size += 1        
+        current = self.size - 1
+
+        # Compare current against parent value to percolate down tree
+        while self.compare(self.elements[current], self.elements[self.parent(current)]) \
+            and self.parent(current) >= 0:
+            
+            self.swap(current, self.parent(current))
+            current = self.parent(current)
 
     def heappop(self) -> int:
 
+        # Error if heap is empty
         if self.size == 0:
             raise IndexError("No heap to pop.")
         
+        # Swapping first and last elements
         self.swap(0, self.size - 1)
+
+        # Set value for final element
         root = self.elements.pop(self.size - 1)
         
+        # Reduce size, restore heap, return lowest value
         self.size -=1
-        self.build_heap()
+        self.heapify(0)
         return root
 
 
@@ -98,12 +125,10 @@ class MinHeap(Heap):
     def __init__(self, array: List[int]) -> None:
         super().__init__(array)
     
+    # Comparison for lowest value.
+    # Could not figure out how to compare if VIOLATES True
     def compare(self, a: int, b: int) -> bool:
-        smallest = False
-        
-        if a < b:
-            smallest = True
-        return smallest
+        return a < b
 
 
 class MaxHeap(Heap):
@@ -111,9 +136,7 @@ class MaxHeap(Heap):
     def __init__(self, array: List[int]) -> None:
         super().__init__(array)
     
+    # Comparison for highest value.
+    # Could not figure out how to compare if VIOLATES True
     def compare(self, a: int, b: int) -> bool:
-        largest = False
-        
-        if a > b:
-            largest = True
-        return largest
+        return a > b
