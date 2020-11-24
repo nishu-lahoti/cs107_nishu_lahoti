@@ -1,5 +1,7 @@
 from random import sample
 from time import time
+from P2 import MinHeap
+import heapq
 
 class PriorityQueue:
 
@@ -36,7 +38,7 @@ def mergesortedlists(lists, pqclass = PriorityQueue):
         
     return merged
 
-def generatelists(n, length = 20, dictionary_path='../data/words/txt'):
+def generatelists(n, length = 20, dictionary_path='./words.txt'):
     with open(dictionary_path, 'r') as f:
         words = [w.strip() for w in f.readlines()]
     lists = []
@@ -72,7 +74,7 @@ class NaivePriorityQueue(PriorityQueue):
         self.elements.append(val)
 
     def get(self):
-        
+
         getVal = self.peek()
         self.elements.remove(min(self.elements))
         return getVal
@@ -84,3 +86,60 @@ class NaivePriorityQueue(PriorityQueue):
 
         minVal = min(self.elements)
         return minVal
+
+class HeapPriorityQueue(PriorityQueue):
+
+    def __init__(self, max_size):
+        # super().__init__(max_size)
+        self.elements = MinHeap([])
+        self.max_size = max_size
+
+    
+    def put(self, val):
+
+        if len(self.elements) > self.max_size - 1:
+            raise IndexError("Max size already reached")
+
+        self.elements.heappush(val)
+
+    def get(self):
+
+        if not self.elements:
+            raise IndexError("Empty priority queue.")
+        
+        return self.elements.heappop()
+
+    def peek(self):
+
+        if not self.elements:
+            raise IndexError("Empty priority queue.")
+
+        return self.elements.elements[0]
+
+class PythonHeapPriorityQueue(PriorityQueue):
+
+    def __init__(self, max_size):
+        # super().__init__(max_size)
+        # heapq.heapify(self.elements)
+        self.elements = []
+        self.max_size = max_size
+    
+    def put(self, val):
+        if len(self.elements) > self.max_size -1:
+            raise IndexError("Max size already reached")
+
+        heapq.heappush(self.elements, val)
+
+    def get(self):
+
+        if not self.elements:
+            raise IndexError("Empty priority queue.")
+
+        return heapq.heappop(self.elements)
+
+    def peek(self):
+
+        if not self.elements:
+            raise IndexError("Empty priority queue.")
+        
+        return self.elements[0]
