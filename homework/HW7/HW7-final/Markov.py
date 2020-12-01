@@ -8,10 +8,11 @@ class Markov:
         self.weather_types = {"sunny": 0, "cloudy": 1, "rainy": 2, "snowy": 3, "windy": 4, "hailing": 5}
         # self.weather_types = ["sunny", "cloudy", "rainy", "snowy", "windy", "hailing"]
 
-    def __iter__():
-        pass
+    def __iter__(self):
         # Returns a MarkovIterator object.
         # Hint: self.get_prob() might come in handy here.
+
+        return MarkovIterator(self.weather_types, self.data)
 
     def load_data(self, file_path = './weather.csv'):
         self.data = np.genfromtxt(file_path, dtype = float, delimiter = ",")
@@ -34,20 +35,23 @@ class Markov:
 
 class MarkovIterator:
 
-    def __init__(self, day_zero_weather, weather_types, transition_matrix):
+    def __init__(self, weather_types, transition_matrix):
+        
         # Useful attributes to help you with the next method
-        self.day_zero_weather = day_zero_weather
+        # Initialize the data values and weather types from the Markov class.
+        self.day_zero_weather = None
         self.weather_types = weather_types
         self.transition_matrix = transition_matrix # np.atleast_2d(transition_matrix)
         self.index_dict = {self.weather_types[index]: index for index in range(len(self.weather_types))}
-        # Somehow initialize the data values from the Markov class.
-
+        
 
     def __iter__(self):
         return self
 
     def __next__(self, current_day_weather):
 
+        # Use np.random.choice to select one of the weather types based on the probabilities inside
+        # the transition matrix. Question is: how do I inform the transition matrix to call the right column?
         return np.random.choice(
             self.weather_types, p = self.transition_matrix[self.index_dict[current_day_weather], :]
         )
@@ -60,7 +64,16 @@ class MarkovIterator:
 
         # Online example: https://medium.com/@__amol__/markov-chains-with-python-1109663f3678
 
-        pass
+    def generate_states(self, current_day_weather, number):
+
+        future_weather = []
+        
+        for i in range(number):
+            next_day = self.__next__(current_day_weather)
+            future_weather.append(next_day)
+            current_day_weather = next_day
+        return future_weather
+
 
 # One possible implementation is an enumeration class with the different weather types      
 # class WeatherTypes(Enum):
