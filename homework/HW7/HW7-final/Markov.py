@@ -5,13 +5,13 @@ class Markov:
     def __init__(self, day_zero_weather = None):
         self.data = []
         self.weather_types = {"sunny": 0, "cloudy": 1, "rainy": 2, "snowy": 3, "windy": 4, "hailing": 5}
-        self._current_day_weather = day_zero_weather
+        self.day_zero_weather = day_zero_weather
 
     def __iter__(self):
         # Returns a MarkovIterator object.
 
         weather_probability_dict = dict()
-        weather_probability = [self.get_prob(self._current_day_weather, w) for w in self.weather_types]
+        weather_probability = [self.get_prob(self.day_zero_weather, w) for w in self.weather_types]
         print(weather_probability)
 
         for i in self.weather_types:
@@ -36,6 +36,14 @@ class Markov:
 
         # Return the probability of next_day_weather given current_day_weather
         return self.data[self.weather_types[next_day]][self.weather_types[current_day]]
+
+    def _simulate_weather_for_day(day):
+        pass
+
+    def get_weather_for_day(day, trials):
+        pass
+
+
 
 class MarkovIterator:
 
@@ -69,7 +77,7 @@ class MarkovIterator:
         print(next_day_weather)
         
         return next_day_weather
-       
+    
 
 
 

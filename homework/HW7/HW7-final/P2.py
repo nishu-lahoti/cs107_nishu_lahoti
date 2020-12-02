@@ -105,6 +105,31 @@ penalized_model.fit(X_train, y_train)
 # Save model 3 to database
 save_to_database(3, 'L1 penalty model', db, penalized_model, X_train, X_test, y_train, y_test)
 
+## DATABASE QUERIES ##
 
+# Print the id of the best model and corresponding test score
+cursor.execute("SELECT id, test_score FROM model_results ORDER BY test_score DESC LIMIT 1")
+best_results = cursor.fetchall()
+print("Best model id:", best_results[0][0], "\nBest validation score:", best_results[0][1])
 
+# Print the feature names and corresponding coefficients of that model
+cursor.execute("SELECT feature_name, value FROM model_coefs WHERE id = 3")
+coef_results = cursor.fetchall()
 
+for i, j in coef_results:
+    print(i, ":", j)
+
+# Use the coefficients extracted from the best model to reproduce the test score of the best performing model
+
+test_model = LogisticRegression(solver='liblinear')
+test_model.fit(X_train, y_train)
+
+# Manually change fit parameters
+test_model.coef_ = np.array(penalized_model.coef_)
+test_model.intercept_ = np.array(penalized_model.intercept_)
+
+test_score = test_model.score(X_test, y_test)
+print(f'Reproduced best validation score: {test_score}')
+
+db.commit()
+db.close()
