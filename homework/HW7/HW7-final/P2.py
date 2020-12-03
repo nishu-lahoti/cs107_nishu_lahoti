@@ -74,6 +74,8 @@ def save_to_database(model_id, model_desc, db, model, X_train, X_test, y_train, 
     # Insert into results table
     cursor.execute('''INSERT INTO model_results (id, desc, train_score, test_score) VALUES (?, ?, ?, ?)''', (model_id, model_desc, train_score, test_score))
 
+    db.commit()
+
 # Set the first model
 baseline_model = LogisticRegression(solver='liblinear')
 baseline_model.fit(X_train, y_train)
@@ -104,6 +106,7 @@ penalized_model.fit(X_train, y_train)
 
 # Save the third model to our database
 save_to_database(3, 'L1 penalty model', db, penalized_model, X_train, X_test, y_train, y_test)
+
 
 ## DATABASE QUERIES ##
 
