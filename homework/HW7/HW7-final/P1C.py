@@ -20,16 +20,20 @@ city_dictionary = {}
 for i in city_weather:
     predictions = Markov(city_weather[i])
     predictions.load_data(file_path='./weather.csv')
-    val = predictions.get_weather_for_day(7, 100)
-    c = collections.Counter(val)
-    city_dictionary[i] = c
-    print(i, ":", dict(c))
+    prediction_val = predictions.get_weather_for_day(7, 100)
+    coll = collections.Counter(prediction_val)
+    city_dictionary[i] = coll
+    print(i, ":", dict(coll))
+
+print("\nMost likely weather in seven days")
+print("----------------------------------")
+
 
 # Second iteration which iterates through the city dictionary and finds the most
 # common weather type and prints it out.
 for i in city_dictionary:
-    d = city_dictionary[i].most_common()
-    print(i, ":", d[0][0])
+    most_common = city_dictionary[i].most_common()
+    print(i, ":", most_common[0][0])
 
 
 

@@ -45,11 +45,16 @@ class Markov:
 
     def _simulate_weather_for_day(self, day):
         
+        # This method returns the predicted weather as a string on the specified day.
+
+        # countDays useful for decrementing input day value.
         countDays = day
         
+        # Catch if the day value is equal to zero and set it equal to day_zero_weather
         if day == 0:
             return self.day_zero_weather
-
+        
+        # Iterate through self and update _current_day and _current_day_weather. Break when countDays = 0.
         for i in self:
             self._current_day += 1
             self._current_day_weather = i
@@ -61,8 +66,10 @@ class Markov:
 
     def get_weather_for_day(self, day, trials = 7):
         
+        # Create empty array to store simulations
         simulated_days = []
 
+        # For the number of trials, run the simulator. Provide ways to refresh the current day and current weather.
         while trials > 0:
             simulated_days.append(self._simulate_weather_for_day(day))
             self._current_day = 0

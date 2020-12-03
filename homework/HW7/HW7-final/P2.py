@@ -6,15 +6,16 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.datasets import load_breast_cancer
 
-# P2A
+## PROBLEM 2 PART A
 
+# Create the database and set the cursor.
+# Drop tables if they already exist.
 db = sqlite3.connect('regression.sqlite')
 cursor = db.cursor()
 cursor.execute("DROP TABLE IF EXISTS model_params")
 cursor.execute("DROP TABLE IF EXISTS model_coefs")
 cursor.execute("DROP TABLE IF EXISTS model_results")
 
-# Create model_params table
 # Create model_params table
 cursor.execute('''CREATE TABLE model_params (
     id INTEGER,
@@ -44,7 +45,7 @@ db.commit()
 
 # P2B
 
-# Load data
+# Load data from sckitlearn and place into pandas DataFrame
 data = load_breast_cancer()
 X = pd.DataFrame(data.data, columns = data.feature_names)
 y = data.target
@@ -60,7 +61,6 @@ def save_to_database(model_id, model_desc, db, model, X_train, X_test, y_train, 
     test_score = model.score(X_test, y_test)
     coef, inter = model.coef_, model.intercept_
 
-
     # Insert into params table
     for i, j in model.get_params().items():
         cursor.execute('''INSERT INTO model_params (id, desc, param_name, value) VALUES (?, ?, ?, ?)''', (model_id, model_desc, i, j))
@@ -74,14 +74,14 @@ def save_to_database(model_id, model_desc, db, model, X_train, X_test, y_train, 
     # Insert into results table
     cursor.execute('''INSERT INTO model_results (id, desc, train_score, test_score) VALUES (?, ?, ?, ?)''', (model_id, model_desc, train_score, test_score))
 
-# Fit model
+# Set the first model
 baseline_model = LogisticRegression(solver='liblinear')
 baseline_model.fit(X_train, y_train)
 
-# Save model 1 database
+# Save the first model to our database
 save_to_database(1, 'Baseline model', db, baseline_model, X_train, X_test, y_train, y_test)
 
-# Reduced logistic regression model
+# Create the second model, a reduced logistic regression model
 feature_cols = ['mean radius', 
                 'texture error',
                 'worst radius',
@@ -94,15 +94,15 @@ X_test_reduced = X_test[feature_cols]
 reduced_model = LogisticRegression(solver='liblinear')
 reduced_model.fit(X_train_reduced, y_train)
 
-# Save model 2 to database
+# Save the second model to our database
 save_to_database(2, 'Reduced model', db, reduced_model, X_train_reduced, X_test_reduced, y_train, y_test)
 
 
-# Penalized logistic regression model
+# Create the third model, penalized logistic regression model
 penalized_model = LogisticRegression(solver='liblinear', penalty='l1', random_state=87, max_iter=150)
 penalized_model.fit(X_train, y_train)
 
-# Save model 3 to database
+# Save the third model to our database
 save_to_database(3, 'L1 penalty model', db, penalized_model, X_train, X_test, y_train, y_test)
 
 ## DATABASE QUERIES ##
