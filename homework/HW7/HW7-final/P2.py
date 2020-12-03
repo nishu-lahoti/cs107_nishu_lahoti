@@ -74,7 +74,7 @@ def save_to_database(model_id, model_desc, db, model, X_train, X_test, y_train, 
     # Insert into results table
     cursor.execute('''INSERT INTO model_results (id, desc, train_score, test_score) VALUES (?, ?, ?, ?)''', (model_id, model_desc, train_score, test_score))
 
-    db.commit()
+  
 
 # Set the first model
 baseline_model = LogisticRegression(solver='liblinear')
@@ -82,6 +82,7 @@ baseline_model.fit(X_train, y_train)
 
 # Save the first model to our database
 save_to_database(1, 'Baseline model', db, baseline_model, X_train, X_test, y_train, y_test)
+db.commit()
 
 # Create the second model, a reduced logistic regression model
 feature_cols = ['mean radius', 
@@ -98,7 +99,7 @@ reduced_model.fit(X_train_reduced, y_train)
 
 # Save the second model to our database
 save_to_database(2, 'Reduced model', db, reduced_model, X_train_reduced, X_test_reduced, y_train, y_test)
-
+db.commit()
 
 # Create the third model, penalized logistic regression model
 penalized_model = LogisticRegression(solver='liblinear', penalty='l1', random_state=87, max_iter=150)
@@ -106,7 +107,7 @@ penalized_model.fit(X_train, y_train)
 
 # Save the third model to our database
 save_to_database(3, 'L1 penalty model', db, penalized_model, X_train, X_test, y_train, y_test)
-
+db.commit()
 
 ## DATABASE QUERIES ##
 
